@@ -39,7 +39,6 @@ public class VulnerableController {
     // XSS(Cross-Site Scripting) 취약점
     @PostMapping("/comments")
     public String addComment(@RequestParam String comment) {
-        // 취약: 사용자 입력을 이스케이프하지 않고 저장 및 반환
         return "<div class='comment'>" + comment + "</div>";
     }
 
