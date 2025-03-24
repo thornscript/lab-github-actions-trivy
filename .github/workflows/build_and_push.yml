@@ -22,6 +22,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
+      # 코드 취약점 분석
+      - name: Run Trivy vulnerability scanner for code
+        uses: aquasecurity/trivy-action@0.30.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-code-results.sarif'
+          severity: 'HIGH,CRITICAL,MEDIUM'
+          timeout: '10m'
+
+      - name: Upload Trivy code scan results to Github Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-code-results.sarif'
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -52,11 +68,11 @@ jobs:
         with:
           image-ref: 'layer6ai/lab-github-actions-trivy:latest'
           format: 'sarif'
-          exit-code: 0 # 취약점이 발견되면 종료 코드
+          exit-code: 1 # 취약점이 발견되면 작업 실패
           severity: 'HIGH,CRITICAL,MEDIUM'
-          output: 'trivy-results.sarif'
+          output: 'trivy-image-results.sarif'
 
       - name: Upload Trivy scan results to Github Security tab
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: 'trivy-image-results.sarif'
