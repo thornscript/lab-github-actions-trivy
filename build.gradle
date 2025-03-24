@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
-    id "org.sonarqube" version '3.5.0.2730'
+    id "org.sonarqube" version '6.0.1.5171'
 }
 
 group = 'dev.poporo'
@@ -26,7 +26,8 @@ repositories {
 
 sonar {
     properties {
-        property "sonar.projectKey", "thornscript_lab-github-actions-trivy_AZXIlqIqNQEWXR7dOg9z"
+        property "sonar.projectKey", "thornscript_lab-github-actions-trivy_8679e5b2-d362-4884-9d0b-78564f80418c"
+        property "sonar.projectName", "lab-github-actions-trivy"
     }
 }
 
